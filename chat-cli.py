@@ -12,6 +12,7 @@ class ChatClient:
         self.server_address = (TARGET_IP,TARGET_PORT)
         self.sock.connect(self.server_address)
         self.tokenid=""
+        self.username=""
     def proses(self,cmdline):
 	j=cmdline.split(" ")
 	try:
@@ -26,14 +27,33 @@ class ChatClient:
                 for w in j[2:]:
                    message="{} {}" . format(message,w)
 		return self.sendmessage(usernameto,message)
-            elif (command== 'logout'):
+            elif (command=='logout'):
 				return self.logout()
             elif (command=='inbox'):
                 return self.inbox()
+            elif(command=='create_group'):
+                group = j[1].strip()
+                return self.create_group(group)
+            elif(command=='join_group'):
+                group = j[1].strip()
+                return self.join_group(group)
+            elif(command=='send_group'):
+                group = j[1].strip()
+                message=""
+                for w in j[2:]:
+                    message="{} {}" . format(message, w)
+                return self.sendmessage_group(group, message)
+            elif(command=='inbox_group'):
+                group = j[1].strip()
+                return self.inbox_group(group)
+            elif(command=='leave_group'):
+                group = j[1].strip()
+                return self.leave_group(group)
 	    else:
 		return "*Maaf, command tidak benar"
 	except IndexError:
 	    return "-Maaf, command tidak benar"
+
     def sendstring(self,string):
         try:
             self.sock.sendall(string)
@@ -58,14 +78,17 @@ class ChatClient:
 		else:
 			return "Log out gagal"
 
-    def login(self,username,password):
-        string="auth {} {} \r\n" . format(username,password)
-        result = self.sendstring(string)
-        if result['status']=='OK':
-            self.tokenid=result['tokenid']
-            return "username {} logged in, token {} " .format(username,self.tokenid)
-        else:
-            return "Error, {}" . format(result['message'])
+    def login(self, username, password):
+		if(self.tokenid != ""):
+			return "You already logged in"
+		string = "auth {} {} \r\n" . format(username, password)
+		result = self.sendstring(string)
+		if result['status'] == 'OK':
+			self.tokenid = result['tokenid']
+			self.username = username
+			return "username {} logged in, token {} " .format(username, self.tokenid)
+		else:
+			return "Error, {}" . format(result['message'])
     
     def sendmessage(self,usernameto="xxx",message="xxx"):
         if (self.tokenid==""):

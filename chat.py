@@ -6,6 +6,7 @@ from Queue import *
 
 class Chat:
 	def __init__(self):
+		self.online_users = []
 		self.sessions={}
 		self.users = {}
 		self.users['messi']={ 'nama': 'Lionel Messi', 'negara': 'Argentina', 'password': 'surabaya', 'incoming' : {}, 'outgoing': {}}
