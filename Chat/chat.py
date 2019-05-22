@@ -187,6 +187,6 @@ if __name__ == "__main__":
 		"send {} mujahidzonk hello gimana kabarnya lus " . format(tokenid))
 	#print j.send_message(tokenid,'gugoh','mujahidzonk','hello lus')
 	#print j.send_message(tokenid,'mujahidzonk','gugoh','hello goh')
-	#print j.send_message(tokenid,'tengkucakahimahimatektro','gugoh','hello goh dari saya yang jadi cakahima himatektro')
+	#print j.send_message(tokenid,'tengkucakahimahimatektro','gugoh','hello goh dari saya yang jadi cakahima himatektro kepengurusan kedepan :) ')
 
 	print j.get_inbox('gugoh')
