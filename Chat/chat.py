@@ -47,11 +47,11 @@ class Chat:
 				username = self.sessions[sessionid]['username']
 				print "{} logging out" . format(username)
 				return self.logout_user(sessionid, username)
-			elif (command=='create_group'):
+			elif (command=='creategroup'):
 				sessionid = j[1]
 				groupname = j[2]
 				return self.join_group(sessionid,groupname)
-			elif (command =='join_group'):
+			elif (command =='joingroup'):
 				sessionid = j[1]
 				groupnameto = j[2]
 				sender = self.sessions[sessionid]['username']
@@ -61,9 +61,9 @@ class Chat:
 				print groupmessage
 				return self.send_group(sender, groupnameto, groupmessage)
 			else:
-				return {'status': 'ERROR', 'message': '**Protocol Tidak Benar'}
+				return {'status': 'ERROR', 'message': '**Syntax Tidak Benar'}
 		except IndexError:
-			return {'status': 'ERROR', 'message': '--Protocol Tidak Benar'}
+			return {'status': 'ERROR', 'message': '--Syntax Tidak Benar'}
 
 	def autentikasi_user(self, username, password):
 		if (username not in self.users):
@@ -77,14 +77,14 @@ class Chat:
 			'username': username, 'userdetail': self.users[username]}
 		self.online_users.append(username)
 		print "{} logged in successfully" . format(username)
-		print "online users: {}" . format(self.online_users)
+		print "Pengguna Online: {}" . format(self.online_users)
 		return {'status': 'OK', 'tokenid': tokenid}
 
 	def logout_user(self, sessionid, username):
 		if (sessionid in self.sessions):
 			del self.sessions[sessionid]
-			print "{} logged out successfully" . format(username)
-			print "online users: {}" . format(self.online_users)
+			print "{} Log out Berhasil" . format(username)
+			print "Pengguna Online: {}" . format(self.online_users)
 		return {'status' : 'OK'}
 
 	def get_user(self, username):
@@ -134,7 +134,7 @@ class Chat:
 
 	def create_group(self, sessionid, groupname):
 		if(groupname in self.groups):
-			return {'status': 'ERROR', 'message': 'group sudah ada'}
+			return {'status': 'ERROR', 'message': 'Group sudah ada'}
 		
 		admin = self.sessions[sessionid]['username']
 		self.groups[groupname] = {'admin':admin, 'user':[]}
@@ -143,7 +143,7 @@ class Chat:
 
 	def join_group(self, sessionid, groupname):
     		if (groupname not in self.groups):
-			return { 'status': 'ERROR', 'message': 'Group tidak ada' }
+			return { 'status': 'ERROR', 'message': 'Group tidak ditemukan' }
 
 		member = self.sessions[sessionid]['username']
 		self.groups[groupname]['users'].append(member)
@@ -152,16 +152,16 @@ class Chat:
 
 	def sendto_group(self, username, groupnameto, groupmessage):
 		if (groupnameto not in self.groups):
-			return { 'status': 'ERROR', 'message': 'Group tujuan tidak ada' }
+			return { 'status': 'ERROR', 'message': 'Group tidak ditemukan' }
 
 		sender = self.get_user(username)
 		if (sender==False):
-			return {'status': 'ERROR', 'message': 'User Tidak Ditemukan'}
+			return {'status': 'ERROR', 'message': 'User Tidak ditemukan'}
 
 		print groupmessage
 		for tousername in self.groups[groupnameto]['users']:
 			reciever = self.get_user(tousername)
-			message = {'Type': 'Group', 'msg_from': sender['nama'], 'msg_to': togroupname, 'msg': groupmessage }
+			message = {'Type': 'Group', 'msg_from': sender['nama'], 'msg_to': groupnameto, 'msg': groupmessage }
 			outqueue_sender = sender['outgoing']
 			inqueue_receiver = reciever['incoming']
 			try:	

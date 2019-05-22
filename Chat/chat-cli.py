@@ -35,7 +35,7 @@ class ChatClient:
 			elif (command == 'logout'):
 				return self.logout()
 			
-			elif (command == 'create_group'):
+			elif (command == 'creategroup'):
 				groupname = j[1]
 				return self.create_group(groupname)
 			
@@ -50,9 +50,9 @@ class ChatClient:
 					groupmessage="{} {}".format(groupmessage,w)
 				return self.send_group(groupnameto, groupmessage)
 			else:
-				return "*Command not found, type `menu` to see all commands"
+				return "*Syntax Tidak Benar*"
 		except IndexError:
-			return "*Command format wrong, type `menu` to see all commands"
+			return "*Syntax Tidak Benar*"
 
 	def sendstring(self, string):
 		try:
@@ -69,19 +69,19 @@ class ChatClient:
 
 	def logout(self):
 		if (self.tokenid == ""):
-			return "Already logged out"
+			return "Sudah log out"
 		string = "logout {} \r\n" . format(self.tokenid)
 		result = self.sendstring(string)
 		if result['status'] == 'OK':
 			self.tokenid = ""
 			self.username = ""
-			return "Log out successful"
+			return "Log out Berhasil"
 		else:
-			return "Unexpected Error(?)"
+			return "Log out Gagal"
 
 	def login(self, username, password):
 		if(self.tokenid != ""):
-			return "You already logged in"
+			return "Anda sudah login"
 		string = "auth {} {} \r\n" . format(username, password)
 		result = self.sendstring(string)
 		if result['status'] == 'OK':
