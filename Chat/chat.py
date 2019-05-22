@@ -11,12 +11,12 @@ class Chat:
 		self.sessions = {}
 		self.users = {}
 		self.groups ={}
-		self.users['messi'] = {'nama': 'Lionel Messi', 'negara': 'Argentina',
-							   'password': 'surabaya', 'incoming': {}, 'outgoing': {}}
-		self.users['henderson'] = {'nama': 'Jordan Henderson', 'negara': 'Inggris',
-								   'password': 'surabaya', 'incoming': {}, 'outgoing': {}}
-		self.users['lineker'] = {'nama': 'Gary Lineker', 'negara': 'Inggris',
-								 'password': 'surabaya', 'incoming': {}, 'outgoing': {}}
+		self.users['gugoh'] = {'nama': 'Aditya Nugroho', 'negara': 'Indonesia',
+							   'password': 'gugoh', 'incoming': {}, 'outgoing': {}}
+		self.users['mujahidzonk'] = {'nama': 'Mujahid Khairuddin', 'negara': 'Korea Selatan',
+								   'password': 'mujahidzonk', 'incoming': {}, 'outgoing': {}}
+		self.users['tengkucakahimahimatektro'] = {'nama': 'Tengku Rafli', 'negara': 'Indonesia',
+								 'password': 'tengkuhimatektro', 'incoming': {}, 'outgoing': {}}
 
 	def proses(self, data):
 		j = data.strip().split(" ")
@@ -178,15 +178,15 @@ class Chat:
 
 if __name__ == "__main__":
 	j = Chat()
-	sesi = j.proses("auth messi surabaya")
+	sesi = j.proses("auth gugoh gugoh")
 	print sesi
-	#sesi = j.autentikasi_user('messi','surabaya')
+	#sesi = j.autentikasi_user('gugoh','gugoh')
 	#print sesi
 	tokenid = sesi['tokenid']
 	print j.proses(
-		"send {} henderson hello gimana kabarnya son " . format(tokenid))
-	#print j.send_message(tokenid,'messi','henderson','hello son')
-	#print j.send_message(tokenid,'henderson','messi','hello si')
-	#print j.send_message(tokenid,'lineker','messi','hello si dari lineker')
+		"send {} mujahidzonk hello gimana kabarnya lus " . format(tokenid))
+	#print j.send_message(tokenid,'gugoh','mujahidzonk','hello lus')
+	#print j.send_message(tokenid,'mujahidzonk','gugoh','hello goh')
+	#print j.send_message(tokenid,'tengkucakahimahimatektro','gugoh','hello goh dari saya yang jadi cakahima himatektro')
 
-	print j.get_inbox('messi')
+	print j.get_inbox('gugoh')
